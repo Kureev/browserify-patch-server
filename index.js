@@ -113,7 +113,7 @@ module.exports = function runServer(files, options) {
         if (wss.clients.length) {
           compose(broadcast, patchMessage, patch)(path, _content);
           logger.info(timestamp + ' Broadcasted patch for *' +
-            path + '* to ' + wss.clients.length + ' clients');
+            path + '* to ' + wss.clients.length + ' client(s)');
         }
 
         updateSourceContent(path, _content);
