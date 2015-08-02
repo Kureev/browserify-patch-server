@@ -1,0 +1,30 @@
+{
+  "name": "browserify-patch-server",
+  "version": "0.1.0",
+  "description": "Patch server for browserify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "bfps": "./bin/browserify-patch-server",
+    "browserify-patch-server": "./bin/browserify-patch-server"
+  },
+  "keywords": [
+    "browserify",
+    "hmr"
+  ],
+  "author": "Alexey Kureev <kureev-mail@ya.ru> (https://github.com/Kureev)",
+  "license": "MIT",
+  "dependencies": {
+    "browserify": "^11.0.0",
+    "chalk": "^1.1.0",
+    "chokidar": "^1.0.4",
+    "diff": "^1.4.0",
+    "logdown": "^1.2.4",
+    "moment": "^2.10.3",
+    "syntax-error": "^1.1.4",
+    "ws": "^0.7.2",
+    "yargs": "^3.15.0"
+  }
+}
