@@ -109,8 +109,8 @@ module.exports = function runServer(files, options) {
         });
       } else {
         logger.info(timestamp + ' Bundle *' + path + '* has been changed');
-        updateSourceContent(path, _content);
         compose(broadcast, patchMessage, patch)(path, _content);
+        updateSourceContent(path, _content);
       }
     });
   });
