@@ -93,6 +93,8 @@ module.exports = function runServer(files, options) {
        */
       const err = _content.match(/SyntaxError:/) ? _content : null;
 
+      logger.info(timestamp + ' Bundle *' + path + '* has been changed');
+
       if (err) {
         const errObj = err.match(/console.error\("(.+)"\)/)[1].split(': ');
         const errType = errObj[0];
@@ -108,8 +110,12 @@ module.exports = function runServer(files, options) {
           error: err,
         });
       } else {
-        logger.info(timestamp + ' Bundle *' + path + '* has been changed');
-        compose(broadcast, patchMessage, patch)(path, _content);
+        if (wss.clients.length) {
+          compose(broadcast, patchMessage, patch)(path, _content);
+          logger.info(timestamp + ' Broadcasted patch for *' +
+            path + '* to ' + wss.clients.length + ' clients');
+        }
+
         updateSourceContent(path, _content);
       }
     });
