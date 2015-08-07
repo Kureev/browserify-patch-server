@@ -1,6 +1,6 @@
 {
   "name": "browserify-patch-server",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Patch server for browserify",
   "main": "index.js",
   "scripts": {
