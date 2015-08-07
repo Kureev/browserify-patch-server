@@ -17,7 +17,6 @@
   "author": "Alexey Kureev <kureev-mail@ya.ru> (https://github.com/Kureev)",
   "license": "MIT",
   "dependencies": {
-    "browserify": "^11.0.0",
     "chalk": "^1.1.0",
     "chokidar": "^1.0.4",
     "diff": "^1.4.0",
