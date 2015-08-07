@@ -1,6 +1,7 @@
 const fs = require('fs');
 const compose = require('./compose');
 const check = require('syntax-error');
+const babel = require('babel');
 
 const WebSocketServer = require('ws').Server;
 const Logdown = require('logdown');
@@ -12,7 +13,7 @@ const error = new Logdown({ prefix: '[BDS:ERROR]', });
 function makeBuildPatchMessage(file) {
   return function buildPatchMessage(patch) {
     return {
-      bundle: file,
+      file: file,
       patch: patch,
     };
   };
@@ -75,7 +76,9 @@ module.exports = function runServer(files, options) {
     /**
      * Get latest content of the watched path
      */
-    fs.readFile(path, 'utf8', function processFile(readError, _content) {
+    babel.transformFile(path, { stage: 0, }, function processFile(readError, res) {
+      const _content = res.code;
+
       if (readError) {
         error.error(timestamp + ' Error reading file *' + path + '*');
         return;
@@ -93,7 +96,7 @@ module.exports = function runServer(files, options) {
        */
       const err = _content.match(/SyntaxError:/) ? _content : null;
 
-      logger.info(timestamp + ' Bundle *' + path + '* has been changed');
+      logger.info(timestamp + ' File *' + path + '* has been changed');
 
       if (err) {
         const errObj = err.match(/console.error\("(.+)"\)/)[1].split(': ');
@@ -106,14 +109,14 @@ module.exports = function runServer(files, options) {
           chalk.yellow('\t ⚠ ' + errMsg) + '\n');
 
         broadcast({
-          bundle: path,
+          file: path,
           error: err,
         });
       } else {
         if (wss.clients.length) {
           compose(broadcast, patchMessage, patch)(path, _content);
           logger.info(timestamp + ' Broadcasted patch for *' +
-            path + '* to ' + wss.clients.length + ' client(s)');
+            path + '* to ' + wss.clients.length + ' clients');
         }
 
         updateSourceContent(path, _content);
@@ -122,7 +125,7 @@ module.exports = function runServer(files, options) {
   });
 
   logger.info(getTimestamp() +
-    ' *Browserify patch server* has been started ' +
+    ' *Patch server* has been started ' +
     'on port *' + port + '*'
   );
 };
