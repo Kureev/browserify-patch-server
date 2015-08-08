@@ -46,9 +46,19 @@ module.exports = function runServer(files, options) {
   const port = options.port || pjsonConfigPort || 8081;
 
   const sources = files.map(function iterateFiles(file) {
+    var buffer;
+    try {
+      buffer = babel.transformFileSync(file, { stage: 0, });
+    } catch (e) {
+      return {
+        file: file,
+        err: e,
+      };
+    }
+
     return {
       file: file,
-      content: babel.transformFileSync(file, { stage: 0, }).code,
+      content: buffer.code,
     };
   });
 
