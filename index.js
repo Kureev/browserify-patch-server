@@ -48,7 +48,7 @@ module.exports = function runServer(files, options) {
   const sources = files.map(function iterateFiles(file) {
     return {
       file: file,
-      content: fs.readFileSync(file, 'utf8'),
+      content: babel.transformFileSync(file, { stage: 0, }).code,
     };
   });
 
