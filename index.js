@@ -50,10 +50,7 @@ module.exports = function runServer(files, options) {
     try {
       buffer = babel.transformFileSync(file, { stage: 0, });
     } catch (e) {
-      return {
-        file: file,
-        err: e,
-      };
+      throw e;
     }
 
     return {
@@ -87,12 +84,15 @@ module.exports = function runServer(files, options) {
      * Get latest content of the watched path
      */
     babel.transformFile(path, { stage: 0, }, function processFile(readError, res) {
+      if (readError) {
+        return broadcast({
+          file: path,
+          error: readError.codeFrame,
+        });
+      }
+
       const _content = res.code;
 
-      if (readError) {
-        error.error(timestamp + ' Error reading file *' + path + '*');
-        return;
-      }
       /**
        * As long as watchify flush a file before
        * write content to it, chokidar catches this event
