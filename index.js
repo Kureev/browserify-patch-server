@@ -94,14 +94,6 @@ module.exports = function runServer(files, options) {
       const _content = res.code;
 
       /**
-       * As long as watchify flush a file before
-       * write content to it, chokidar catches this event
-       * and fire `change` event for empty file.
-       * Following code helps us avoid processing it ;)
-       */
-      if (!_content.length || check(_content)) return;
-
-      /**
        * Check for syntax errors
        */
       const err = _content.match(/SyntaxError:/) ? _content : null;
