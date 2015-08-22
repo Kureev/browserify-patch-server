@@ -75,8 +75,6 @@ module.exports = function runServer(files, options) {
     );
   });
 
-  watcher.setMaxListeners(0);
-
   watcher.on('change', function onChange(path) {
     const patchMessage = makeBuildPatchMessage(path);
     const timestamp = getTimestamp();
