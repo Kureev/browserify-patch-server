@@ -48,15 +48,19 @@ module.exports = function runServer(files, options) {
   const sources = files.map(function iterateFiles(file) {
     var buffer;
     try {
-      buffer = babel.transformFileSync(file, { stage: 0, });
+      const stats = fs.lstatSync(file);
+      if (stats.isFile()) {
+        buffer = babel.transformFileSync(file, { stage: 0, });
+        return {
+          file: file,
+          content: buffer.code,
+        };
+      }
     } catch (e) {
       throw e;
     }
-
-    return {
-      file: file,
-      content: buffer.code,
-    };
+  }).filter(function filterValidSources(source) {
+    return source;
   });
 
   const updateSourceContent = makeUpdateSourceContent(sources);
