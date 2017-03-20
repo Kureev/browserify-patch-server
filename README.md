@@ -1,4 +1,6 @@
 ## Browserify patch server
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/Kureev/browserify-patch-server.svg)](https://greenkeeper.io/)
 Because we need HMR an analog for webpack's [`webpack-dev-server`](http://webpack.github.io/docs/webpack-dev-server.html)
 
 ## Requirements
