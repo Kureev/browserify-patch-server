@@ -17,14 +17,14 @@
   "author": "Alexey Kureev <kureev-mail@ya.ru> (https://github.com/Kureev)",
   "license": "MIT",
   "dependencies": {
-    "babel": "^5.8.21",
+    "babel": "^6.23.0",
     "chalk": "^1.1.0",
     "chokidar": "^1.0.4",
-    "diff": "^1.4.0",
-    "logdown": "^1.2.4",
+    "diff": "^3.2.0",
+    "logdown": "^2.2.0",
     "moment": "^2.10.3",
     "syntax-error": "^1.1.4",
-    "ws": "^0.7.2",
-    "yargs": "^3.15.0"
+    "ws": "^2.2.1",
+    "yargs": "^7.0.2"
   }
 }
